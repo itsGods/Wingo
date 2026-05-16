@@ -1,0 +1,60 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and wallet",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "walletBalance": { "type": "number", "description": "Current balance" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["email", "walletBalance", "createdAt", "updatedAt"]
+    },
+    "Period": {
+      "title": "Period",
+      "description": "A game period instance",
+      "type": "object",
+      "properties": {
+        "interval": { "type": "number" },
+        "number": { "type": "number" },
+        "size": { "type": "string" },
+        "color": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string", "enum": ["closed"] },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["interval", "number", "size", "color", "status", "createdAt"]
+    },
+    "Bet": {
+      "title": "Bet",
+      "description": "A user's bet",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "interval": { "type": "number" },
+        "periodId": { "type": "string" },
+        "option": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "won", "lost"] },
+        "payout": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "interval", "periodId", "option", "amount", "status", "payout", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user profiles"
+    },
+    "/periods_{interval}/{periodId}": {
+      "schema": { "$ref": "#/entities/Period" },
+      "description": "Stores closed game periods for a specific interval"
+    },
+    "/users/{userId}/bets/{betId}": {
+      "schema": { "$ref": "#/entities/Bet" },
+      "description": "Stores user bets"
+    }
+  }
+}
