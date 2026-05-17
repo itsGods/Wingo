@@ -14,9 +14,36 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: '51Game Wingo | Real-time Color Prediction Game',
-  description: 'Join the premier Wingo color prediction game. Bet on red, green, violet, numbers or size. Real-time gameplay with 1, 3, 5, and 10 minute intervals.',
-  keywords: '51game, wingo, color prediction, betting, real-time game, win go, earn money',
+  title: "LUCKY WINGO | India's Most Trusted Color Prediction & Mines Game",
+  description: "Join LUCKY WINGO, the premier destination for real-time betting! Play Wingo color prediction, Mines, and more. Fast cashouts, secure platform, and 24/7 gameplay.",
+  keywords: 'lucky wingo, wingo game, color prediction, mines game, crypto betting, real-time game, win go, play online',
+  metadataBase: new URL('https://luckywingo.eu.cc'),
+  openGraph: {
+    title: 'LUCKY WINGO | Play Wingo & Mines',
+    description: 'Join the premier destination for real-time betting! Play Wingo, Mines, and more.',
+    url: 'https://luckywingo.eu.cc',
+    siteName: 'LUCKY WINGO',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_IN',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

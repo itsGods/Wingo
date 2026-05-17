@@ -21,7 +21,7 @@ export default function Home() {
         <div className="flex items-center bg-white px-3 py-2 text-sm text-gray-500 shadow-sm border-b border-gray-100">
           <Speaker className="w-4 h-4 text-orange-500 mr-2 flex-shrink-0" />
           <div className="overflow-hidden whitespace-nowrap overflow-ellipsis">
-            <span className="animate-pulse">Welcome to 51Game! The best platform to win real money. Minimum recharge ₹100.</span>
+            <span className="animate-pulse">Welcome to LUCKY WINGO! The best platform to win real money. Minimum recharge ₹100.</span>
           </div>
           <div className="flex bg-orange-100 text-orange-500 px-2 py-0.5 rounded-full text-xs font-semibold ml-2">
             Details

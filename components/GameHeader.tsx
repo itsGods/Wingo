@@ -23,7 +23,7 @@ export default function GameHeader() {
         <button className="p-1 -ml-1 text-white/90 hover:bg-white/10 rounded-full transition-colors">
           <ChevronLeft size={28} />
         </button>
-        <h1 className="font-semibold text-lg tracking-wide">51Game Wingo</h1>
+        <h1 className="font-semibold text-lg tracking-wide">LUCKY WINGO</h1>
         <div className="flex gap-2">
           {user ? (
             <button onClick={logout} className="p-1 hover:bg-white/20 rounded-full transition-colors" title="Logout">

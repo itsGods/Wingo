@@ -47,10 +47,10 @@ export default function CasinoHome() {
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30">
-              <span className="font-display font-bold text-xl text-white tracking-widest italic">51</span>
+              <span className="font-display font-bold text-xl text-white tracking-widest italic">LW</span>
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-lg leading-none">51GAME</span>
+              <span className="font-bold text-lg leading-none">LUCKY WINGO</span>
               <span className="text-[10px] text-white/80 uppercase tracking-widest">Premium Casino</span>
             </div>
           </div>
@@ -101,7 +101,7 @@ export default function CasinoHome() {
           <Volume2 size={16} className="text-orange-500 flex-shrink-0" />
           <div className="overflow-hidden whitespace-nowrap overflow-ellipsis flex-1">
             <span className="text-xs text-gray-600 animate-pulse inline-block">
-              Welcome to 51Game! The best platform to win real money. Minimum recharge ₹100.
+              Welcome to LUCKY WINGO! The best platform to win real money. Minimum recharge ₹100.
             </span>
           </div>
           <button className="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-md flex-shrink-0">
