@@ -26,7 +26,7 @@ export default function GameHeader() {
         <h1 className="font-semibold text-lg tracking-wide">LUCKY WINGO</h1>
         <div className="flex gap-2">
           {user ? (
-            <button onClick={logout} className="p-1 hover:bg-white/20 rounded-full transition-colors" title="Logout">
+            <button onClick={() => logout()} className="p-1 hover:bg-white/20 rounded-full transition-colors" title="Logout">
               <LogOut size={20} />
             </button>
           ) : null}
@@ -45,7 +45,7 @@ export default function GameHeader() {
                 <div className="flex items-center gap-3">
                   <span className="text-3xl font-bold tracking-tight">₹{walletBalance.toFixed(2)}</span>
                   <button 
-                    onClick={handleRefresh}
+                    onClick={() => handleRefresh()}
                     className={cn("p-1.5 bg-white/20 hover:bg-white/30 rounded-full transition-all", isRefreshing && "animate-spin")}
                   >
                     <RefreshCw size={14} className="text-white" />

@@ -59,7 +59,7 @@ export default function AccountPage() {
         </div>
 
         <button 
-          onClick={logout}
+          onClick={() => logout()}
           className="w-full bg-white border border-red-100 text-red-500 rounded-2xl p-4 font-bold flex items-center justify-center gap-2 shadow-sm active:bg-red-50 transition-colors"
         >
           <LogOut size={20} />

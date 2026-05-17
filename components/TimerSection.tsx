@@ -51,7 +51,7 @@ export default function TimerSection({ interval, currentPeriod, onTimeUp, initia
           osc.start();
           osc.stop(ctx.currentTime + 0.15);
         } catch (err) {
-          console.error("Audio error", err);
+          console.error("Audio error encountered");
         }
       }
     } else if (timeLeft === 0) {
@@ -71,7 +71,7 @@ export default function TimerSection({ interval, currentPeriod, onTimeUp, initia
           osc.start();
           osc.stop(ctx.currentTime + 0.5);
         } catch (err) {
-          console.error("Audio error", err);
+          console.error("Audio error encountered");
         }
       }
     }

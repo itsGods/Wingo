@@ -204,7 +204,7 @@ export default function MinesPage() {
           setGameStatus('cashout');
           setGrid(newGrid.map(t => ({ ...t, revealed: true })));
         } catch(e) {
-          console.error(e);
+          console.error("error encountered");
         } finally {
           setIsProcessing(false);
         }
@@ -308,7 +308,7 @@ export default function MinesPage() {
              <div className="pt-2">
                {gameStatus === 'playing' ? (
                  <button
-                    onClick={cashout}
+                    onClick={() => cashout()}
                     disabled={isProcessing || gemsFound === 0}
                     className="w-full bg-[#00E701] hover:bg-[#1fff20] text-black py-3.5 rounded font-bold text-sm transition-colors disabled:opacity-50 shadow-md flex items-center justify-center gap-2 uppercase tracking-wide flex-col leading-tight"
                  >
@@ -320,7 +320,7 @@ export default function MinesPage() {
                  </button>
                ) : (
                  <button
-                    onClick={startGame}
+                    onClick={() => startGame()}
                     disabled={isProcessing}
                     className="w-full bg-[#00E701] hover:bg-[#1fff20] text-black py-3.5 rounded font-bold text-sm transition-colors disabled:opacity-50 shadow-md flex items-center justify-center gap-2 uppercase tracking-wide"
                  >
@@ -338,7 +338,7 @@ export default function MinesPage() {
                    <p className="text-[#00E701] font-mono font-bold text-sm">₹{(currentPayout - betAmount).toFixed(2)}</p>
                  </div>
                  <button 
-                  onClick={pickRandom}
+                  onClick={() => pickRandom()}
                   disabled={isProcessing}
                   className="bg-[#2F4553] hover:bg-[#3b5566] disabled:opacity-50 transition-colors rounded border border-[#213743] text-white text-xs font-bold py-2 shadow-inner uppercase"
                  >

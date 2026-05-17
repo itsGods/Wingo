@@ -33,7 +33,7 @@ export default function ActivityPage() {
       });
       setBets(hist);
     }, (error) => {
-      console.error(error);
+      console.error("error fetching bets");
     });
 
     return () => unsubscribe();

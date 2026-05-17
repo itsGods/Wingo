@@ -92,7 +92,7 @@ export default function GameEngineView({ interval, isActive }: { interval: GameI
           }
         }
       } catch (err) {
-        console.error("Sync error", err);
+        console.error("Sync error encountered");
       }
     };
     
@@ -214,7 +214,7 @@ export default function GameEngineView({ interval, isActive }: { interval: GameI
 
         alert(`Successfully placed bet on ${selectedBet} for ₹${total}`);
       } catch (err: any) {
-        console.error(err);
+        console.error("Failed to place bet");
         alert(`Bet failed: ${err.message}`);
       }
     } else {

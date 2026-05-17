@@ -2,6 +2,7 @@
 
 @theme {
   --animate-marquee-vertical: marquee-vertical 10s linear infinite;
+  --animate-spin-slow: spin 3s linear infinite;
   
   @keyframes marquee-vertical {
     0% { transform: translateY(0); }
