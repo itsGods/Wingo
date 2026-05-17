@@ -2,5 +2,5 @@
   "name": "LUCKY WINGO",
   "description": "LUCKY WINGO - The ultimate destination for Real-time Color Prediction and Betting Games. A fully responsive, production-ready implementation of Wingo, Mines, and more.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
