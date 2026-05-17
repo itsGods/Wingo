@@ -1,4 +1,4 @@
-export type GameInterval = 1 | 3 | 5 | 10;
+export type GameInterval = 0.5 | 1 | 3 | 5;
 export type GameColor = 'red' | 'green' | 'violet';
 export type GameSize = 'big' | 'small';
 export type BetOption = GameColor | GameSize | number;

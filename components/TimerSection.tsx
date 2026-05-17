@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { HelpCircle } from 'lucide-react';
 import { GameInterval } from '@/types/game';
 
-export default function TimerSection({ interval, currentPeriod, onTimeUp, initialTimeLeft }: { interval: GameInterval, currentPeriod: string, onTimeUp: () => void, initialTimeLeft?: number }) {
+export default function TimerSection({ interval, currentPeriod, onTimeUp, initialTimeLeft, isActive = true }: { interval: GameInterval, currentPeriod: string, onTimeUp: () => void, initialTimeLeft?: number, isActive?: boolean }) {
   const [timeLeft, setTimeLeft] = useState<number>(initialTimeLeft !== undefined ? initialTimeLeft : interval * 60);
   const [prevInitial, setPrevInitial] = useState(initialTimeLeft);
 
@@ -30,6 +30,52 @@ export default function TimerSection({ interval, currentPeriod, onTimeUp, initia
 
     return () => clearInterval(timer);
   }, [timeLeft, interval, onTimeUp]);
+
+  useEffect(() => {
+    if (!isActive) return;
+    // Play intense sound effects during the last 3 seconds
+    if (timeLeft > 0 && timeLeft <= 3) {
+      if (typeof window !== 'undefined') {
+        try {
+          const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+          const ctx = new AudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'square';
+          // Pitch increases as we get closer to 0
+          osc.frequency.setValueAtTime(800 + (3 - timeLeft) * 200, ctx.currentTime);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.15);
+        } catch (err) {
+          console.error("Audio error", err);
+        }
+      }
+    } else if (timeLeft === 0) {
+      // Play a buzzer-like sound at 0
+      if (typeof window !== 'undefined') {
+        try {
+          const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+          const ctx = new AudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(300, ctx.currentTime);
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.5);
+        } catch (err) {
+          console.error("Audio error", err);
+        }
+      }
+    }
+  }, [timeLeft, isActive]);
 
   const mins = Math.floor(timeLeft / 60);
   const secs = timeLeft % 60;

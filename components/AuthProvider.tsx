@@ -7,7 +7,8 @@ import {
   onAuthStateChanged, 
   signOut,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  updateProfile
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 
@@ -16,7 +17,7 @@ interface AuthContextType {
   loading: boolean;
   walletBalance: number;
   login: (email: string, pass: string) => Promise<void>;
-  register: (email: string, pass: string) => Promise<void>;
+  register: (email: string, pass: string, name: string, phone: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -33,6 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [walletBalance, setWalletBalance] = useState(0);
+  const [pendingProfile, setPendingProfile] = useState<{name: string, phone: string} | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -46,10 +48,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (!userDoc.exists()) {
           await setDoc(userRef, {
             email: currUser.email,
+            name: pendingProfile?.name || 'User',
+            phone: pendingProfile?.phone || '',
             walletBalance: 10000, // Sign up bonus
             createdAt: Date.now(),
             updatedAt: Date.now(),
           });
+          setPendingProfile(null);
         }
       } else {
         if (active) setUser(null);
@@ -61,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [pendingProfile]);
 
   useEffect(() => {
     if (user) {
@@ -79,8 +84,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await signInWithEmailAndPassword(auth, email, pass);
   };
 
-  const register = async (email: string, pass: string) => {
-    await createUserWithEmailAndPassword(auth, email, pass);
+  const register = async (email: string, pass: string, name: string, phone: string) => {
+    setPendingProfile({ name, phone });
+    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+    if (userCredential.user) {
+      await updateProfile(userCredential.user, { displayName: name });
+    }
   };
 
   const logout = async () => {

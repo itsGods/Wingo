@@ -38,5 +38,8 @@ service cloud.firestore {
     match /periods_10/{periodId} {
       allow read, write: if true;
     }
+    match /periods_0.5/{periodId} {
+      allow read, write: if true;
+    }
   }
 }

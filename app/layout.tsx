@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/components/AuthProvider';
+import AuthGuard from '@/components/AuthGuard';
+import WinPopupManager from '@/components/WinPopupManager';
+import LosePopupManager from '@/components/LosePopupManager';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const poppins = Poppins({ 
@@ -21,11 +24,16 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="bg-gray-100 min-h-screen text-slate-900 font-sans antialiased" suppressHydrationWarning>
         <AuthProvider>
-          <div className="mx-auto w-full max-w-md bg-white min-h-screen shadow-2xl overflow-hidden relative pb-20">
-            {children}
-          </div>
+          <AuthGuard>
+            <div className="mx-auto w-full max-w-md bg-white min-h-screen shadow-2xl overflow-hidden relative pb-20">
+              {children}
+              <WinPopupManager />
+              <LosePopupManager />
+            </div>
+          </AuthGuard>
         </AuthProvider>
       </body>
     </html>
   );
 }
+

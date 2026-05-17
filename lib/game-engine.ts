@@ -12,7 +12,8 @@ export const getPeriodData = (intervalMinutes: number, nowMs: number = Date.now(
   const day = String(d.getUTCDate()).padStart(2, '0');
   const h = String(d.getUTCHours()).padStart(2, '0');
   const min = String(d.getUTCMinutes()).padStart(2, '0');
-  const periodId = `${y}${m}${day}${h}${min}00`;
+  const sec = String(d.getUTCSeconds()).padStart(2, '0');
+  const periodId = `${y}${m}${day}${h}${min}${sec}`;
   const timeLeftMs = currentPeriodEnd - nowMs;
   
   return { periodId, currentPeriodStart, currentPeriodEnd, timeLeftMs };
@@ -40,7 +41,8 @@ export const ensurePeriodsResolved = async (intervalMinutes: number) => {
   const day = String(lastPeriodD.getUTCDate()).padStart(2, '0');
   const h = String(lastPeriodD.getUTCHours()).padStart(2, '0');
   const min = String(lastPeriodD.getUTCMinutes()).padStart(2, '0');
-  const lastPeriodId = `${y}${m}${day}${h}${min}00`;
+  const sec = String(lastPeriodD.getUTCSeconds()).padStart(2, '0');
+  const lastPeriodId = `${y}${m}${day}${h}${min}${sec}`;
 
   const periodRef = doc(db, `periods_${intervalMinutes}`, lastPeriodId);
 
