@@ -7,10 +7,22 @@ import { Bell, Search, HeadphonesIcon, Download, Trophy, Flame, Play, Volume2, S
 import BottomNav from '@/components/BottomNav';
 import { useAuth } from '@/components/AuthProvider';
 import { useRouter } from 'next/navigation';
+import GameLoadingOverlay from '@/components/GameLoadingOverlay';
 
 export default function CasinoHome() {
   const { user, walletBalance } = useAuth();
   const router = useRouter();
+  const [navigatingTo, setNavigatingTo] = useState<{title: string, subtitle?: string, isDark?: boolean} | null>(null);
+
+  const handleNav = (path: string, gameInfo: {title: string, subtitle?: string, isDark?: boolean}) => {
+    setNavigatingTo(gameInfo);
+    // Allow React to flush the state and browser to paint the overlay before we trigger heavy routing
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        router.push(path);
+      });
+    });
+  };
 
   // Fake winners data
   const winners = [
@@ -23,6 +35,13 @@ export default function CasinoHome() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F4F6F9] pb-24">
+      {navigatingTo && (
+        <GameLoadingOverlay 
+          title={navigatingTo.title} 
+          subtitle={navigatingTo.subtitle} 
+          isDark={navigatingTo.isDark} 
+        />
+      )}
       {/* Header */}
       <header className="bg-gradient-to-r from-indigo-600 to-purple-700 text-white px-4 py-3 pb-8 rounded-b-[2rem] shadow-md relative z-10">
         <div className="flex justify-between items-center mb-4">
@@ -122,7 +141,7 @@ export default function CasinoHome() {
 
           <div className="grid grid-cols-2 gap-3">
             {/* Win Go Card */}
-            <Link href="/play" className="group">
+            <div onClick={() => handleNav('/play', { title: 'Win Go', subtitle: 'Initializing game engine...', isDark: false })} className="group cursor-pointer">
               <div className="bg-white rounded-2xl p-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center h-36 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-purple-100 to-transparent rounded-bl-full opacity-50"></div>
                 <div className="absolute top-2 left-2 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-sm">HOT</div>
@@ -135,17 +154,19 @@ export default function CasinoHome() {
                 <h3 className="font-bold text-gray-800 text-sm">Win Go</h3>
                 <p className="text-[10px] text-gray-400">Guess Color/Number</p>
               </div>
-            </Link>
+            </div>
 
-            {/* K3 Card */}
-            <div className="bg-white rounded-2xl p-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center h-36 relative opacity-80">
-              <div className="w-16 h-16 relative mt-1 mb-2 flex items-center justify-center bg-gradient-to-tr from-blue-400 to-indigo-500 rounded-xl">
-                 <div className="grid grid-cols-2 gap-1 p-1">
-                   {[1,2,3,4].map(i => <div key={i} className="w-3 h-3 bg-white rounded-sm"></div>)}
+            {/* Mines Card */}
+            <div className="bg-white rounded-2xl p-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center h-36 relative overflow-hidden cursor-pointer active:scale-95 transition-transform" onClick={() => handleNav('/mines', { title: 'Mines', subtitle: 'Preparing minefield...', isDark: true })}>
+              <div className="w-16 h-16 relative mt-1 mb-2 flex items-center justify-center bg-gradient-to-tr from-slate-700 to-slate-900 rounded-xl border-2 border-indigo-500/20 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+                 <div className="grid grid-cols-3 gap-[2px]">
+                   {[...Array(9)].map((_, i) => (
+                     <div key={i} className={`w-2.5 h-2.5 rounded-sm ${i === 4 ? 'bg-indigo-500' : 'bg-slate-600'}`}></div>
+                   ))}
                  </div>
               </div>
-              <h3 className="font-bold text-gray-800 text-sm">K3 Lottery</h3>
-              <p className="text-[10px] text-gray-400">Coming Soon</p>
+              <h3 className="font-bold text-gray-800 text-sm">Mines</h3>
+              <p className="text-[10px] text-gray-400">Avoid the bombs</p>
             </div>
 
             {/* 5D Card */}

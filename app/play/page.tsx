@@ -5,6 +5,7 @@ import { Speaker } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import GameHeader from '@/components/GameHeader';
 import GameEngineView from '@/components/GameEngineView';
+import GameLoadingOverlay from '@/components/GameLoadingOverlay';
 import { GameInterval } from '@/types/game';
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col min-h-screen bg-[#F7F8FF]">
+      <GameLoadingOverlay title="Win Go" subtitle="Initializing game engine..." />
       <GameHeader />
       
       <div className="flex-1 overflow-y-auto pb-24">
